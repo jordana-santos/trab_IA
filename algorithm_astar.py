@@ -1,51 +1,187 @@
-#matriz de adjacencias da academia, com distancias
+# distâncias reais g(n)
 grafo = {
-    'Esteira': [],
-    'Bicicleta': [('Supino', 9), ('Crossover', 3), ('Scott', 7)],
-    'Cadeira Extensora': [('Supino', 4), ('Scott', 6), ('Crossover', 9)],
-    'Panturrilha': [('Supino', 6), ('Scott',7), ('Crossover',9), ('Banco Reclinável',7)],
-    'Smith': [('Supino',8), ('Scott', 6), ('Crossover',8), ('Banco Reclinável', 4)],
-    'Leg Press': [('Supino', 4), ('Crossover', 5), ('Scott', 4), ('Banco Reclinável', 9)],
-    'Banco Reclinável': [],
-    'Crossover': [],
-    'Supino': [('Bicicleta', 9), ('Leg Press',4), ('Scott',3), ('Cadeira Extensora', 4), ('Smith', 8), ('Panturrilha',7), ('Banco Reclinável',8)],
-    'Scott': [],
+    'AC': [('RO', 2), ('AM', 5)],
+    'AM': [('RR', 4), ('PA', 10), ('AC', 5), ('RO', 4)],
+    'RO': [('AC', 2), ('MT', 5), ('AM', 4)],
+    'RR': [('AM', 4), ('PA', 6)],
+    'PA': [('AM', 10), ('RR', 6), ('MA', 6), ('TO', 5), ('AP', 1)],
+    'AP': [('PA', 1)],
+    'TO': [('PA', 5), ('MA', 3), ('PI', 6), ('GO', 5), ('MT', 5)],
+    'MA': [('PA', 6), ('TO', 3), ('PI', 3)],
+    'PI': [('TO', 6), ('MA', 3), ('CE', 2), ('BA', 5)],
+    'CE': [('PI', 2), ('RN', 1), ('PB', 2)],
+    'RN': [('CE', 1), ('PB', 1)],
+    'PB': [('RN', 1), ('CE', 2), ('PE', 1)],
+    'PE': [('PB', 1), ('AL', 1)],
+    'AL': [('PE', 1), ('SE', 1)],
+    'SE': [('AL', 1), ('BA', 3)],
+    'BA': [('SE', 3), ('PI', 5), ('GO', 6), ('MG', 6)],
+    'GO': [('TO', 5), ('BA', 6), ('MT', 4), ('MS', 3), ('DF', 1)],
+    'DF': [('GO', 1), ('MT', 6), ('MS', 2)],
+    'MT': [('RO', 5), ('TO', 5), ('GO', 4), ('DF', 6), ('MS', 4)],
+    'MS': [('GO', 3), ('DF', 2), ('MT', 4), ('SP', 5), ('PR', 4)],
+    'SP': [('MS', 5), ('MG', 3), ('RJ', 2), ('PR', 2)],
+    'MG': [('SP', 3), ('RJ', 2), ('ES', 2), ('BA', 6)],
+    'RJ': [('SP', 2), ('MG', 2)],
+    'ES': [('MG', 2)],
+    'PR': [('SP', 2), ('SC', 1), ('MS', 4)],
+    'SC': [('PR', 1), ('RS', 3)],
+    'RS': [('SC', 3)],
 }
 
-energia = {
-    'Esteira': ,
-    'Bicicleta': 7,
-    'Cadeira Extensora': ,
-    'Panturrilha': ,
-    'Smith': ,
-    'Leg Press': ,
-    'Banco Reclinável': ,
-    'Crossover': ,
-    'Supino': ,
-    'Scott': ,
+#distâncias estimadas h(n)
+distancia_amazonas = {
+    'AC': 3,
+    'AL': ,
+    'AP': ,
+    'AM': 0,
+    'BA': ,
+    'CE': ,
+    'ES': ,
+    'GO': ,
+    'MA': ,
+    'MT': ,
+    'MS': ,
+    'MG': ,
+    'PA': 8,
+    'PB': ,
+    'PR': ,
+    'PE': ,
+    'PI': ,
+    'RJ': ,
+    'RN': ,
+    'RS': ,
+    'RO': 4,
+    'RR': 2,
+    'SC': ,
+    'SP': ,
+    'SE': ,
+    'TO': 
 }
 
+#tempo real g(n)
 tempo = {
-    'Esteira': ,
-    'Bicicleta': 5,
-    'Cadeira Extensora': ,
-    'Panturrilha': ,
-    'Smith': ,
-    'Leg Press': ,
-    'Banco Reclinável': ,
-    'Crossover': ,
-    'Supino': ,
-    'Scott': ,
+    'AC': 2,
+    'AL': 1,
+    'AP': 2,
+    'AM': 10,
+    'BA': 5,
+    'CE': 2,
+    'ES': 1,
+    'GO': 4,
+    'MA': 4,
+    'MT': 7,
+    'MS': 4,
+    'MG': 6,
+    'PA': 9,
+    'PB': 1,
+    'PR': 2,
+    'PE': 1,
+    'PI': 3,
+    'RJ': 1,
+    'RN': 1,
+    'RS': 3,
+    'RO': 2,
+    'RR': 2,
+    'SC': 1,
+    'SP': 3,
+    'SE': 1,
+    'TO': 3
+}
+
+#tempo estimado h(n)
+tempo_amazonas = {
+    'AC': 2,
+    'AL': 1,
+    'AP': 2,
+    'AM': 10,
+    'BA': 5,
+    'CE': 2,
+    'ES': 1,
+    'GO': 4,
+    'MA': 4,
+    'MT': 7,
+    'MS': 4,
+    'MG': 6,
+    'PA': 9,
+    'PB': 1,
+    'PR': 2,
+    'PE': 1,
+    'PI': 3,
+    'RJ': 1,
+    'RN': 1,
+    'RS': 3,
+    'RO': 2,
+    'RR': 2,
+    'SC': 1,
+    'SP': 3,
+    'SE': 1,
+    'TO': 3
+}
+
+#perigo real g(n)
+perigo = {
+    'AC': ,
+    'AL': ,
+    'AP': ,
+    'AM': ,
+    'BA': ,
+    'CE': ,
+    'ES': ,
+    'GO': ,
+    'MA': ,
+    'MT': ,
+    'MS': ,
+    'MG': ,
+    'PA': ,
+    'PB': ,
+    'PR': ,
+    'PE': ,
+    'PI': ,
+    'RJ': ,
+    'RN': ,
+    'RS': ,
+    'RO': ,
+    'RR': ,
+    'SC': ,
+    'SP': ,
+    'SE': ,
+    'TO': 
+}
+
+#perigo estimado até amazonas h(n)
+perigo_amazonas = {
+    'AC': ,
+    'AL': ,
+    'AP': ,
+    'AM': ,
+    'BA': ,
+    'CE': ,
+    'ES': ,
+    'GO': ,
+    'MA': ,
+    'MT': ,
+    'MS': ,
+    'MG': ,
+    'PA': ,
+    'PB': ,
+    'PR': ,
+    'PE': ,
+    'PI': ,
+    'RJ': ,
+    'RN': ,
+    'RS': ,
+    'RO': ,
+    'RR': ,
+    'SC': ,
+    'SP': ,
+    'SE': ,
+    'TO': 
 }
 
 def personalizar_caminho():
-    estado_inicial = int(input('Qual é o seu equipamento inicial?'))
-    estado_final = int(input('Qual será o equipamento que finalizará seu treino?'))
-    intensidade = float(input('Qual a intensidade do treino? \n0.5 = Leve\n1 = Moderado \n2 = Intenso\n')) #Mudar a qtd de máquinas visitadas antes de chegar na final
-    peso_distancia = float(input('Qual a importância da distância entre máquinas? (0 a 1):'))
-    peso_energia = float(input('Qual a importância da energia gasta em cada exercício? (0 a 1):'))
-    peso_tempo = float(input('Qual a importância do tempo de execução de um exercício? (0 a 1):'))
-    # esses 3 últimos que são float, acho que vale mais a pena pedir de 1 a 10, e depois converter, pra ficar mais intuitivo
+    peso_tempo = float(input('Qual a importância do tempo passado em cada estado? (0 a 1):'))
+    peso_perigo = float(input('Qual a importância do perigo que cada estado representa? (0 a 1):'))
 
 
 def main():
