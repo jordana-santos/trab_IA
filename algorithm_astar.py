@@ -31,7 +31,7 @@ grafo = {
 #distâncias estimadas h(n)
 distancia_amazonas = {
     'AC': 3,
-    'AL': 11, 
+    'AL': 10, 
     'AP': 5, 
     'AM': 0,
     'BA': 9, 
@@ -47,13 +47,13 @@ distancia_amazonas = {
     'PR': 15, 
     'PE': 11, 
     'PI': 8, 
-    'RJ': 14, 
+    'RJ': 13, 
     'RN': 12, 
-    'RS': 20, 
+    'RS': 18, 
     'RO': 2, 
     'RR': 3, 
-    'SC': 18, 
-    'SP': 15, 
+    'SC': 16, 
+    'SP': 14, 
     'SE': 11, 
     'TO': 7 
 }
