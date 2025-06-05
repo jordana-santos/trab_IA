@@ -4,7 +4,7 @@ import heapq
 # GRAFOS FIXOS
 # ====================
 
-inicio = 'RS'
+inicio = 'RN'
 objetivo = 'AM'
 
 grafo = {
@@ -147,13 +147,13 @@ def calcular_custo(atual, vizinho, grafo, tempo_real, peso_dist, peso_temp):
     return peso_dist * custo_dist + peso_temp * custo_temp
 
 
-def expandir_vizinhos(atual, caminho, g_total, grafo, tempo_real, h_estimada, tempo_estimado, peso_dist, peso_temp, menor_custo):
+def expandir_vizinhos(atual, caminho, g_total, grafo, tempo_real, h_estimada, tempo_estimado, peso_dist, peso_temp, menor_custo, closed_set):
     """Gera a lista de vizinhos a serem adicionados à fila de prioridade."""
     vizinhos_expandidos = []
 
     for vizinho in grafo.get(atual, {}):
-        if vizinho in caminho:
-            continue
+        if vizinho in caminho or vizinho in closed_set:
+            continue  # Ignora já visitados
 
         custo = calcular_custo(atual, vizinho, grafo, tempo_real, peso_dist, peso_temp)
         novo_g = g_total + custo
@@ -189,9 +189,13 @@ def a_estrela_ponderada(inicio, objetivo, grafo, tempo_real, h_estimada, tempo_e
 
     while open_set:
         f_atual, atual, caminho, g_total = heapq.heappop(open_set)
+
+        if atual in closed_set:
+            continue  # Pula nós já fechados
+
         closed_set.add(atual)
 
-        print(f"\n📍 Visitando: {atual}")
+        print(f"\nVisitando: {atual}")
         print("OPEN:", [n for _, n, _, _ in open_set])
         print("CLOSED:", list(closed_set))
 
@@ -199,14 +203,15 @@ def a_estrela_ponderada(inicio, objetivo, grafo, tempo_real, h_estimada, tempo_e
             menor_custo, melhores_caminhos = atualizar_melhores_caminhos(
                 caminho, g_total, menor_custo, melhores_caminhos
             )
-            continue
+            break  # Chegou ao destino, fim da busca
 
         vizinhos = expandir_vizinhos(
             atual, caminho, g_total,
             grafo, tempo_real,
             h_estimada, tempo_estimado,
             peso_dist, peso_temp,
-            menor_custo
+            menor_custo,
+            closed_set 
         )
 
         for vizinho_info in vizinhos:
@@ -220,8 +225,9 @@ def a_estrela_ponderada(inicio, objetivo, grafo, tempo_real, h_estimada, tempo_e
 # ====================
 
 if __name__ == "__main__":
-    print("A* NA MIGRAÇÃO DE AVES")
-    print("Escolha os pesos de distância, tempo e perigo.\nEles devem somar 1")
+    print("A* na migração de aves")
+    print("Escolha os pesos de distância e tempo.\nEles devem somar 1.\n")
+
     try:
         peso_dist = float(input("Digite o peso da DISTÂNCIA (de 0 a 1): "))
         peso_temp = float(input("Digite o peso do TEMPO (de 0 a 1): "))
@@ -233,10 +239,10 @@ if __name__ == "__main__":
             peso_dist, peso_temp
         )
 
-        print("\nCaminhos ótimos encontrados:")
-        for c in caminhos:
-            print("→", " → ".join(c))
-        print("Custo total mínimo (ponderado):", round(custo, 2))
+        print("\n✅ Caminhos ótimos encontrados:")
+        for i, c in enumerate(caminhos, 1):
+            print(f"  {i}.", " → ".join(c))
+        print("\n💰 Custo total mínimo (ponderado):", round(custo, 2))
 
     except ValueError as e:
-        print("❌ Erro:", e)
+        print(f"❌ Erro: {e}")
