@@ -4,7 +4,7 @@ import heapq
 # GRAFOS FIXOS
 # ====================
 
-inicio = 'RN'
+inicio = 'RS'
 objetivo = 'AM'
 
 grafo = {
@@ -239,10 +239,10 @@ if __name__ == "__main__":
             peso_dist, peso_temp
         )
 
-        print("\n✅ Caminhos ótimos encontrados:")
+        print("\nCaminhos ótimos encontrados:")
         for i, c in enumerate(caminhos, 1):
             print(f"  {i}.", " → ".join(c))
-        print("\n💰 Custo total mínimo (ponderado):", round(custo, 2))
+        print("\nCusto total mínimo (ponderado):", round(custo, 2))
 
     except ValueError as e:
         print(f"❌ Erro: {e}")
