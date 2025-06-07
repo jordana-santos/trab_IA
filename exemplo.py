@@ -4,7 +4,7 @@ import heapq
 # GRAFOS FIXOS
 # ====================
 
-inicio = 'RS'
+#inicio = 'RS'
 objetivo = 'AM'
 
 grafo = {
@@ -211,13 +211,13 @@ def calcular_custo(atual, vizinho, grafo, tempo_real, perigo_real, peso_dist, pe
 
 
 
-def expandir_vizinhos(atual, caminho, g_total, grafo, tempo_real, perigo_real, distancia_estimada, tempo_estimado, perigo_estimado, peso_dist, peso_temp, peso_peri, menor_custo):
+def expandir_vizinhos(atual, caminho, g_total, grafo, tempo_real, perigo_real, distancia_estimada, tempo_estimado, perigo_estimado, peso_dist, peso_temp, peso_peri, menor_custo, closed_set):
     """Gera a lista de vizinhos a serem adicionados à fila de prioridade."""
     vizinhos_expandidos = []
 
     for vizinho in grafo.get(atual, {}):
-        if vizinho in caminho:
-            continue
+        if vizinho in caminho or vizinho in closed_set:
+            continue  # Ignora já visitados
 
         custo = calcular_custo(atual, vizinho, grafo, tempo_real, perigo_real, peso_dist, peso_temp, peso_peri)
         novo_g = g_total + custo
@@ -243,7 +243,7 @@ def atualizar_melhores_caminhos(caminho, g_total, menor_custo, melhores_caminhos
 # A* PRINCIPAL
 # ====================
 
-def a_estrela_ponderada(inicio, objetivo, grafo, tempo_real, perigo_real, distancia_estimada, tempo_estimado, perigo_estimado, peso_dist, peso_temp, peso_peri):
+def a_estrela(inicio, objetivo, grafo, tempo_real, perigo_real, distancia_estimada, tempo_estimado, perigo_estimado, peso_dist, peso_temp, peso_peri):
     open_set = inicializar_open_set(inicio)
     heapq.heapify(open_set)
     closed_set = set()
@@ -253,6 +253,10 @@ def a_estrela_ponderada(inicio, objetivo, grafo, tempo_real, perigo_real, distan
 
     while open_set:
         f_atual, atual, caminho, g_total = heapq.heappop(open_set)
+
+        if atual in closed_set:
+            continue  # Pula nós já fechados
+
         closed_set.add(atual)
 
         print(f"\n📍 Visitando: {atual}")
@@ -263,14 +267,15 @@ def a_estrela_ponderada(inicio, objetivo, grafo, tempo_real, perigo_real, distan
             menor_custo, melhores_caminhos = atualizar_melhores_caminhos(
                 caminho, g_total, menor_custo, melhores_caminhos
             )
-            continue
+            break
 
         vizinhos = expandir_vizinhos(
             atual, caminho, g_total,
             grafo, tempo_real, perigo_real,
             distancia_estimada, tempo_estimado, perigo_estimado,
             peso_dist, peso_temp, peso_peri,
-            menor_custo
+            menor_custo,
+            closed_set
         )
 
         for vizinho_info in vizinhos:
@@ -287,11 +292,12 @@ if __name__ == "__main__":
     print("A* NA MIGRAÇÃO DE AVES")
     print("Escolha os pesos de distância, tempo e perigo.\nEles devem somar 1")
     try:
+        inicio = input(("Digite a sigla do estado inicial desejado:"))
         peso_dist = float(input("Digite o peso da DISTÂNCIA (de 0 a 1): "))
         peso_temp = float(input("Digite o peso do TEMPO (de 0 a 1): "))
         peso_peri = float(input("Digite o peso do PERIGO (de 0 a 1): "))
 
-        caminhos, custo = a_estrela_ponderada(
+        caminhos, custo = a_estrela(
             inicio, objetivo,
             grafo, tempo_real, perigo_real,
             distancia_estimada, tempo_estimado, perigo_estimado,
