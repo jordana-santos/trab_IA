@@ -64,33 +64,65 @@ tempo_real = {
     'SC': {'PR': 2, 'RS': 4},
     'RS': {'SC': 4},
 }
-h_estimada = {
+
+#perigo real g(n)
+perigo_real = {
+   'AC': {'RO': 4, 'AM': 3},
+    'AM': {'RR': 5, 'PA': 6, 'AC': 3, 'RO': 4, 'MT': 7},
+    'RO': {'AC': 4, 'MT': 6, 'AM': 4},
+    'RR': {'AM': 5, 'PA': 7},
+    'PA': {'AM': 6, 'RR': 7, 'MA': 8, 'TO': 9, 'AP': 5},
+    'AP': {'PA': 5},
+    'TO': {'PA': 9, 'MA': 8, 'PI': 10, 'GO': 11, 'MT': 10, 'BA': 12},
+    'MA': {'PA': 8, 'TO': 8, 'PI': 9},
+    'PI': {'TO': 10, 'MA': 9, 'CE': 11, 'BA': 12, 'PE': 13},
+    'CE': {'PI': 11, 'RN': 12, 'PB': 13, 'PE': 13},
+    'RN': {'CE': 12, 'PB': 13},
+    'PB': {'RN': 13, 'CE': 13, 'PE': 14},
+    'PE': {'PB': 14, 'AL': 13, 'BA': 12, 'PI': 13, 'CE': 13},
+    'AL': {'PE': 13, 'SE': 12, 'BA': 11},
+    'SE': {'AL': 12, 'BA': 11},
+    'BA': {'SE': 11, 'PI': 12, 'GO': 11, 'MG': 10, 'ES': 9, 'TO': 12, 'PE': 12, 'AL': 11},
+    'GO': {'TO': 11, 'BA': 11, 'MT': 10, 'MS': 10, 'DF': 9},
+    'MT': {'RO': 6, 'TO': 10, 'GO': 10, 'DF': 9, 'MS': 9, 'AM': 7},
+    'MS': {'GO': 10, 'MG': 10, 'MT': 9, 'SP': 12, 'PR': 13},
+    'SP': {'MS': 12, 'MG': 11, 'RJ': 10, 'PR': 13},
+    'MG': {'SP': 11, 'RJ': 9, 'ES': 8, 'BA': 10, 'MS': 10, 'GO': 10},
+    'RJ': {'SP': 10, 'MG': 9, 'ES': 8},
+    'ES': {'MG': 8, 'RJ': 8, 'BA': 9},
+    'PR': {'SP': 13, 'SC': 10, 'MS': 13},
+    'SC': {'PR': 10, 'RS': 9},
+    'RS': {'SC': 9},
+}
+
+#distâncias estimadas h(n)
+distancia_estimada = {
     'AC': 3,
-    'AL': 10, 
-    'AP': 5, 
+    'AL': 10,
+    'AP': 5,
     'AM': 0,
-    'BA': 9, 
-    'CE': 10, 
-    'ES': 12, 
-    'GO': 8, 
-    'MA': 7, 
+    'BA': 9,
+    'CE': 10,
+    'ES': 12,
+    'GO': 8,
+    'MA': 7,
     'MT': 6,
-    'MS': 11, 
-    'MG': 11, 
-    'PA': 5, 
-    'PB': 12, 
-    'PR': 15, 
-    'PE': 11, 
-    'PI': 8, 
-    'RJ': 13, 
-    'RN': 12, 
-    'RS': 18, 
-    'RO': 2, 
-    'RR': 3, 
-    'SC': 16, 
-    'SP': 14, 
-    'SE': 11, 
-    'TO': 7 
+    'MS': 11,
+    'MG': 11,
+    'PA': 5,
+    'PB': 12,
+    'PR': 15,
+    'PE': 11,
+    'PI': 8,
+    'RJ': 13,
+    'RN': 12,
+    'RS': 18,
+    'RO': 2,
+    'RR': 3,
+    'SC': 16,
+    'SP': 14,
+    'SE': 11,
+    'TO': 7
 }
 
 tempo_estimado = {
@@ -123,6 +155,35 @@ tempo_estimado = {
     'TO': 5,
 }
 
+perigo_estimado = {
+    'AC': 3,
+    'AL': 13,
+    'AP': 5,
+    'AM': 0,
+    'BA': 12,
+    'CE': 13,
+    'ES': 14,
+    'GO': 10,
+    'MA': 8,
+    'MT': 12,
+    'MS': 11,
+    'MG': 13,
+    'PA': 5,
+    'PB': 15,
+    'PR': 15,
+    'PE': 14,
+    'PI': 11,
+    'RJ': 16,
+    'RN': 16,
+    'RS': 17,
+    'RO': 4,
+    'RR': 3,
+    'SC': 15,
+    'SP': 14,
+    'SE': 13,
+    'TO': 8
+}
+
 
 # ====================
 # FUNÇÕES AUXILIARES
@@ -133,31 +194,34 @@ def inicializar_open_set(inicio):
     return [(0, inicio, [inicio], 0)]
 
 
-def obter_heuristica(vizinho, h_estimada, tempo_estimado, peso_dist, peso_temp):
+def obter_heuristica(vizinho, distancia_estimada, tempo_estimado, perigo_estimado, peso_dist, peso_temp, peso_peri):
     """Calcula a heurística ponderada."""
-    h_dist = h_estimada.get(vizinho, 0)
+    h_dist = distancia_estimada.get(vizinho, 0)
     h_temp = tempo_estimado.get(vizinho, 0)
-    return peso_dist * h_dist + peso_temp * h_temp
+    h_peri = perigo_estimado.get(vizinho, 0)
+    return (peso_dist * h_dist) + (peso_temp * h_temp) + (peso_peri * h_peri)
 
 
-def calcular_custo(atual, vizinho, grafo, tempo_real, peso_dist, peso_temp):
+def calcular_custo(atual, vizinho, grafo, tempo_real, perigo_real, peso_dist, peso_temp, peso_peri):
     """Calcula o custo real ponderado entre dois nós."""
     custo_dist = grafo[atual][vizinho]
     custo_temp = tempo_real[atual][vizinho]
-    return peso_dist * custo_dist + peso_temp * custo_temp
+    custo_peri = perigo_real[atual][vizinho]
+    return (peso_dist * custo_dist) + (peso_temp * custo_temp) + (peso_peri * custo_peri)
 
 
-def expandir_vizinhos(atual, caminho, g_total, grafo, tempo_real, h_estimada, tempo_estimado, peso_dist, peso_temp, menor_custo, closed_set):
+
+def expandir_vizinhos(atual, caminho, g_total, grafo, tempo_real, perigo_real, distancia_estimada, tempo_estimado, perigo_estimado, peso_dist, peso_temp, peso_peri, menor_custo):
     """Gera a lista de vizinhos a serem adicionados à fila de prioridade."""
     vizinhos_expandidos = []
 
     for vizinho in grafo.get(atual, {}):
-        if vizinho in caminho or vizinho in closed_set:
-            continue  # Ignora já visitados
+        if vizinho in caminho:
+            continue
 
-        custo = calcular_custo(atual, vizinho, grafo, tempo_real, peso_dist, peso_temp)
+        custo = calcular_custo(atual, vizinho, grafo, tempo_real, perigo_real, peso_dist, peso_temp, peso_peri)
         novo_g = g_total + custo
-        heuristica = obter_heuristica(vizinho, h_estimada, tempo_estimado, peso_dist, peso_temp)
+        heuristica = obter_heuristica(vizinho, distancia_estimada, tempo_estimado, perigo_estimado, peso_dist, peso_temp, peso_peri)
         f_novo = novo_g + heuristica
 
         if novo_g <= menor_custo:
@@ -179,7 +243,7 @@ def atualizar_melhores_caminhos(caminho, g_total, menor_custo, melhores_caminhos
 # A* PRINCIPAL
 # ====================
 
-def a_estrela_ponderada(inicio, objetivo, grafo, tempo_real, h_estimada, tempo_estimado, peso_dist, peso_temp):
+def a_estrela_ponderada(inicio, objetivo, grafo, tempo_real, perigo_real, distancia_estimada, tempo_estimado, perigo_estimado, peso_dist, peso_temp, peso_peri):
     open_set = inicializar_open_set(inicio)
     heapq.heapify(open_set)
     closed_set = set()
@@ -189,13 +253,9 @@ def a_estrela_ponderada(inicio, objetivo, grafo, tempo_real, h_estimada, tempo_e
 
     while open_set:
         f_atual, atual, caminho, g_total = heapq.heappop(open_set)
-
-        if atual in closed_set:
-            continue  # Pula nós já fechados
-
         closed_set.add(atual)
 
-        print(f"\nVisitando: {atual}")
+        print(f"\n📍 Visitando: {atual}")
         print("OPEN:", [n for _, n, _, _ in open_set])
         print("CLOSED:", list(closed_set))
 
@@ -203,15 +263,14 @@ def a_estrela_ponderada(inicio, objetivo, grafo, tempo_real, h_estimada, tempo_e
             menor_custo, melhores_caminhos = atualizar_melhores_caminhos(
                 caminho, g_total, menor_custo, melhores_caminhos
             )
-            break  # Chegou ao destino, fim da busca
+            continue
 
         vizinhos = expandir_vizinhos(
             atual, caminho, g_total,
-            grafo, tempo_real,
-            h_estimada, tempo_estimado,
-            peso_dist, peso_temp,
-            menor_custo,
-            closed_set 
+            grafo, tempo_real, perigo_real,
+            distancia_estimada, tempo_estimado, perigo_estimado,
+            peso_dist, peso_temp, peso_peri,
+            menor_custo
         )
 
         for vizinho_info in vizinhos:
@@ -225,24 +284,24 @@ def a_estrela_ponderada(inicio, objetivo, grafo, tempo_real, h_estimada, tempo_e
 # ====================
 
 if __name__ == "__main__":
-    print("A* na migração de aves")
-    print("Escolha os pesos de distância e tempo.\nEles devem somar 1.\n")
-
+    print("A* NA MIGRAÇÃO DE AVES")
+    print("Escolha os pesos de distância, tempo e perigo.\nEles devem somar 1")
     try:
         peso_dist = float(input("Digite o peso da DISTÂNCIA (de 0 a 1): "))
         peso_temp = float(input("Digite o peso do TEMPO (de 0 a 1): "))
+        peso_peri = float(input("Digite o peso do PERIGO (de 0 a 1): "))
 
         caminhos, custo = a_estrela_ponderada(
             inicio, objetivo,
-            grafo, tempo_real,
-            h_estimada, tempo_estimado,
-            peso_dist, peso_temp
+            grafo, tempo_real, perigo_real,
+            distancia_estimada, tempo_estimado, perigo_estimado,
+            peso_dist, peso_temp, peso_peri
         )
 
         print("\nCaminhos ótimos encontrados:")
-        for i, c in enumerate(caminhos, 1):
-            print(f"  {i}.", " → ".join(c))
-        print("\nCusto total mínimo (ponderado):", round(custo, 2))
+        for c in caminhos:
+            print("→", " → ".join(c))
+        print("Custo total mínimo (ponderado):", round(custo, 2))
 
     except ValueError as e:
-        print(f"❌ Erro: {e}")
+        print("❌ Erro:", e)
