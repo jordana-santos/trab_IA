@@ -81,7 +81,7 @@ tempo = {
     'RN': {'CE': 1, 'PB': 1},
     'RO': {'AC': 3, 'MT': 6, 'AM': 5},
     'RR': {'AM': 5, 'PA': 8},
-    'RS': {'SC': 4}
+    'RS': {'SC': 4},
     'SE': {'AL': 1, 'BA': 4},
     'SC': {'PR': 1, 'RS': 4},
     'SP': {'MS': 6, 'MG': 4, 'RJ': 3, 'PR': 3},
@@ -143,7 +143,7 @@ perigo = {
     'RN': {'CE': 12, 'PB': 13},
     'RO': {'AC': 4, 'MT': 6, 'AM': 4},
     'RR': {'AM': 5, 'PA': 7},
-    'RS': {'SC': 9}
+    'RS': {'SC': 9},
     'SE': {'AL': 12, 'BA': 11},
     'SC': {'PR': 10, 'RS': 9},
     'SP': {'MS': 12, 'MG': 11, 'RJ': 10, 'PR': 13},
@@ -180,7 +180,6 @@ perigo_amazonas = {
     'SE': 13,   
     'TO': 8     
 }
-
 
 def personalizar_caminho():
     peso_tempo = float(input('Qual a importância do tempo passado em cada estado? (0 a 1):'))
