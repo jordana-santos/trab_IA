@@ -1,4 +1,10 @@
-# distâncias reais g(n)
+# ====================
+# GRAFOS FIXOS
+# ====================
+
+#inicio = 'RS'
+objetivo = 'AM'
+
 grafo = {
     'AC': {'RO': 3, 'AM': 4},
     'AL': {'PE': 2, 'SE': 1, 'BA': 3},
@@ -28,8 +34,67 @@ grafo = {
     'TO': {'PA': 5, 'MA': 4, 'PI': 6, 'GO': 5, 'MT': 5, 'BA': 6}
 }
 
+tempo_real = {
+    'AC': {'RO': 3, 'AM': 6},
+    'AM': {'RR': 5, 'PA': 12, 'AC': 6, 'RO': 5, 'MT': 7},
+    'RO': {'AC': 3, 'MT': 6, 'AM': 5},
+    'RR': {'AM': 5, 'PA': 7},
+    'PA': {'AM': 6, 'RR': 7, 'MA': 7, 'TO': 6, 'AP': 2, 'MT':6},
+    'AP': {'PA': 2},
+    'TO': {'PA': 6, 'MA': 4, 'PI': 7, 'GO': 6, 'MT': 6, 'BA': 7},
+    'MA': {'PA': 7, 'TO': 4, 'PI': 4},
+    'PI': {'TO': 7, 'MA': 4, 'CE': 3, 'BA': 6, 'PE': 4},
+    'CE': {'PI': 3, 'RN': 2, 'PB': 3, 'PE': 2},
+    'RN': {'CE': 2, 'PB': 2},
+    'PB': {'RN': 2, 'CE': 3, 'PE': 2},
+    'PE': {'PB': 2, 'AL': 2, 'BA': 5, 'PI': 4, 'CE': 2},
+    'AL': {'PE': 2, 'SE': 2, 'BA': 5},
+    'SE': {'AL': 2, 'BA': 4},
+    'BA': {'SE': 4, 'PI': 6, 'GO': 7, 'MG': 7, 'ES': 5, 'TO': 7, 'PE': 5, 'AL': 5},
+    'GO': {'TO': 6, 'BA': 7, 'MT': 5, 'MS': 4, 'MG': 6},
+    'MT': {'RO': 6, 'TO': 6, 'GO': 5, 'MS': 5, 'AM': 7, 'PA':6},
+    'MS': {'GO': 4, 'MG': 7, 'MT': 5, 'SP': 6, 'PR': 5},
+    'SP': {'MS': 6, 'MG': 4, 'RJ': 3, 'PR': 3},
+    'MG': {'SP': 4, 'RJ': 3, 'ES': 3, 'BA': 7, 'MS': 7, 'GO': 6},
+    'RJ': {'SP': 3, 'MG': 3, 'ES': 4},
+    'ES': {'MG': 3, 'RJ': 4, 'BA': 5},
+    'PR': {'SP': 3, 'SC': 2, 'MS': 5},
+    'SC': {'PR': 2, 'RS': 4},
+    'RS': {'SC': 4},
+}
+
+#perigo real g(n)
+perigo_real = {
+    'AC': {'RO': 4, 'AM': 3},
+    'AM': {'RR': 5, 'PA': 6, 'AC': 3, 'RO': 4, 'MT': 7},
+    'RO': {'AC': 4, 'MT': 6, 'AM': 4},
+    'RR': {'AM': 5, 'PA': 7},
+    'PA': {'AM': 6, 'RR': 7, 'MA': 8, 'TO': 9, 'AP': 5, 'MT':6},
+    'AP': {'PA': 5},
+    'TO': {'PA': 9, 'MA': 8, 'PI': 10, 'GO': 11, 'MT': 10, 'BA': 12},
+    'MA': {'PA': 8, 'TO': 8, 'PI': 9},
+    'PI': {'TO': 10, 'MA': 9, 'CE': 11, 'BA': 12, 'PE': 13},
+    'CE': {'PI': 11, 'RN': 12, 'PB': 13, 'PE': 13},
+    'RN': {'CE': 12, 'PB': 13},
+    'PB': {'RN': 13, 'CE': 13, 'PE': 14},
+    'PE': {'PB': 14, 'AL': 13, 'BA': 12, 'PI': 13, 'CE': 13},
+    'AL': {'PE': 13, 'SE': 12, 'BA': 11},
+    'SE': {'AL': 12, 'BA': 11},
+    'BA': {'SE': 11, 'PI': 12, 'GO': 11, 'MG': 8, 'ES': 9, 'TO': 12, 'PE': 12, 'AL': 11},
+    'GO': {'TO': 11, 'BA': 11, 'MT': 10, 'MS': 10, 'MG': 9},
+    'MT': {'RO': 6, 'TO': 10, 'GO': 10, 'DF': 9, 'MS': 9, 'AM': 7, 'PA':6},
+    'MS': {'GO': 10, 'MG': 10, 'MT': 9, 'SP': 12, 'PR': 13},
+    'SP': {'MS': 12, 'MG': 11, 'RJ': 10, 'PR': 13},
+    'MG': {'SP': 11, 'RJ': 9, 'ES': 8, 'BA': 8, 'MS': 10, 'GO': 9},
+    'RJ': {'SP': 10, 'MG': 9, 'ES': 8},
+    'ES': {'MG': 8, 'RJ': 8, 'BA': 9},
+    'PR': {'SP': 13, 'SC': 10, 'MS': 13},
+    'SC': {'PR': 10, 'RS': 9},
+    'RS': {'SC': 9},
+}
+
 #distâncias estimadas h(n)
-distancia_amazonas = {
+distancia_estimada = {
     'AC': 3,
     'AL': 17,
     'AP': 8,
@@ -58,39 +123,7 @@ distancia_amazonas = {
     'TO': 10
 }
 
-#tempo real g(n)
-tempo = {
-    'AC': {'RO': 3, 'AM': 6},
-    'AL': {'PE': 1, 'SE': 1, 'BA': 5},
-    'AM': {'RR': 5, 'PA': 13, 'AC': 6, 'RO': 5, 'MT': 8},
-    'AP': {'PA': 1},
-    'BA': {'SE': 4, 'PI': 6, 'GO': 8, 'MG': 8, 'ES': 5, 'TO': 8, 'PE': 5, 'AL': 5},
-    'CE': {'PI': 3, 'RN': 1, 'PB': 3, 'PE': 1},
-    'ES': {'MG': 3, 'RJ': 4, 'BA': 5},
-    'GO': {'TO': 6, 'BA': 8, 'MT': 5, 'MS': 4},
-    'MA': {'PA': 8, 'TO': 4, 'PI': 4},
-    'MG': {'SP': 4, 'RJ': 3, 'ES': 3, 'BA': 8, 'MS': 8, 'GO': 6},
-    'MS': {'GO': 4, 'MG': 8, 'MT': 5, 'SP': 6, 'PR': 5},
-    'MT': {'RO': 6, 'TO': 6, 'GO': 5, 'MS': 5, 'AM': 8},
-    'PA': {'AM': 6, 'RR': 8, 'MA': 8, 'TO': 6, 'AP': 1},
-    'PB': {'RN': 1, 'CE': 3, 'PE': 1},
-    'PE': {'PB': 1, 'AL': 1, 'BA': 5, 'PI': 4, 'CE': 1},
-    'PI': {'TO': 8, 'MA': 4, 'CE': 3, 'BA': 6, 'PE': 4},
-    'PR': {'SP': 3, 'SC': 1, 'MS': 5},
-    'RJ': {'SP': 3, 'MG': 3, 'ES': 4},
-    'RN': {'CE': 1, 'PB': 1},
-    'RO': {'AC': 3, 'MT': 6, 'AM': 5},
-    'RR': {'AM': 5, 'PA': 8},
-    'RS': {'SC': 4},
-    'SE': {'AL': 1, 'BA': 4},
-    'SC': {'PR': 1, 'RS': 4},
-    'SP': {'MS': 6, 'MG': 4, 'RJ': 3, 'PR': 3},
-    'TO': {'PA': 6, 'MA': 4, 'PI': 8, 'GO': 6, 'MT': 6, 'BA': 8},
-}
-
-
-#tempo estimado h(n)
-tempo_amazonas = {
+tempo_estimado = {
     'AC': 2,
     'AL': 9,
     'AP': 6,
@@ -119,75 +152,31 @@ tempo_amazonas = {
     'TO': 5,
 }
 
-
-#perigo real g(n)
-perigo = {
-    'AC': {'RO': 4, 'AM': 3},
-    'AL': {'PE': 13, 'SE': 12, 'BA': 11},
-    'AM': {'RR': 5, 'PA': 6, 'AC': 3, 'RO': 4, 'MT': 7},
-    'AP': {'PA': 5},
-    'BA': {'SE': 11, 'PI': 12, 'GO': 11, 'MG': 10, 'ES': 9, 'TO': 12, 'PE': 12, 'AL': 11},
-    'CE': {'PI': 11, 'RN': 12, 'PB': 13, 'PE': 13},
-    'ES': {'MG': 8, 'RJ': 8, 'BA': 9},
-    'GO': {'TO': 11, 'BA': 11, 'MT': 10, 'MS': 10},
-    'MA': {'PA': 8, 'TO': 8, 'PI': 9},
-    'MG': {'SP': 11, 'RJ': 9, 'ES': 8, 'BA': 10, 'MS': 10, 'GO': 10},
-    'MS': {'GO': 10, 'MG': 10, 'MT': 9, 'SP': 12, 'PR': 13},
-    'MT': {'RO': 6, 'TO': 10, 'GO': 10, 'MS': 9, 'AM': 7},
-    'PA': {'AM': 6, 'RR': 7, 'MA': 8, 'TO': 9, 'AP': 5},
-    'PB': {'RN': 13, 'CE': 13, 'PE': 14},
-    'PE': {'PB': 14, 'AL': 13, 'BA': 12, 'PI': 13, 'CE': 13},
-    'PI': {'TO': 10, 'MA': 9, 'CE': 11, 'BA': 12, 'PE': 13},
-    'PR': {'SP': 13, 'SC': 10, 'MS': 13},
-    'RJ': {'SP': 10, 'MG': 9, 'ES': 8},
-    'RN': {'CE': 12, 'PB': 13},
-    'RO': {'AC': 4, 'MT': 6, 'AM': 4},
-    'RR': {'AM': 5, 'PA': 7},
-    'RS': {'SC': 9},
-    'SE': {'AL': 12, 'BA': 11},
-    'SC': {'PR': 10, 'RS': 9},
-    'SP': {'MS': 12, 'MG': 11, 'RJ': 10, 'PR': 13},
-    'TO': {'PA': 9, 'MA': 8, 'PI': 10, 'GO': 11, 'MT': 10, 'BA': 12},
+perigo_estimado = {
+    'AC': 3,
+    'AL': 13,
+    'AP': 5,
+    'AM': 0,
+    'BA': 12,
+    'CE': 13,
+    'ES': 14,
+    'GO': 10,
+    'MA': 8,
+    'MT': 12,
+    'MS': 11,
+    'MG': 13,
+    'PA': 5,
+    'PB': 15,
+    'PR': 15,
+    'PE': 14,
+    'PI': 11,
+    'RJ': 16,
+    'RN': 16,
+    'RS': 17,
+    'RO': 4,
+    'RR': 3,
+    'SC': 15,
+    'SP': 14,
+    'SE': 13,
+    'TO': 8
 }
-
-
-#perigo estimado até amazonas h(n)
-perigo_amazonas = {
-    'AC': 3,    
-    'AL': 13,   
-    'AP': 5,    
-    'AM': 0,    
-    'BA': 12,   
-    'CE': 13,   
-    'ES': 14,   
-    'GO': 10,   
-    'MA': 8,    
-    'MT': 12,    
-    'MS': 11,   
-    'MG': 13,   
-    'PA': 5,    
-    'PB': 15,   
-    'PR': 15,   
-    'PE': 14,   
-    'PI': 11,   
-    'RJ': 16,   
-    'RN': 16,   
-    'RS': 17,   
-    'RO': 4,    
-    'RR': 3,    
-    'SC': 15,   
-    'SP': 14,   
-    'SE': 13,   
-    'TO': 8     
-}
-
-def personalizar_caminho():
-    peso_tempo = float(input('Qual a importância do tempo passado em cada estado? (0 a 1):'))
-    peso_perigo = float(input('Qual a importância do perigo que cada estado representa? (0 a 1):'))
-
-
-def main():
-    personalizar_caminho()
-
-if __name__ == "__main__":
-    main()
