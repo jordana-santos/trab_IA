@@ -190,7 +190,7 @@ perigo_estimado = {
 
 def inicializar_open_set(inicio):
     """Cria a fila de prioridade inicial."""
-    return [(0, inicio, [inicio], 0)]
+    return [(0, inicio, [inicio], 0)] # estimativa, nó atual, caminho, custo real
 
 
 def obter_heuristica(vizinho, distancia_estimada, tempo_estimado, perigo_estimado, peso_dist, peso_temp, peso_peri):
@@ -223,7 +223,7 @@ def expandir_vizinhos(atual, caminho, g_total, grafo, tempo_real, perigo_real, d
         heuristica = obter_heuristica(vizinho, distancia_estimada, tempo_estimado, perigo_estimado, peso_dist, peso_temp, peso_peri)
         f_novo = novo_g + heuristica
 
-        if novo_g <= menor_custo:
+        if novo_g <= menor_custo: # só passam os vizinhos que o custo atual é menor que o melhor atual
             vizinhos_expandidos.append((f_novo, vizinho, caminho + [vizinho], novo_g))
 
     return vizinhos_expandidos
@@ -259,7 +259,7 @@ def a_estrela(inicio, objetivo, grafo, tempo_real, perigo_real, distancia_estima
         closed_set.add(atual)
 
         print(f"\n📍 Visitando: {atual}")
-        print("OPEN:", [n for _, n, _, _ in open_set])
+        print("OPEN:", [n for _, n, _, _ in open_set]) # imprime só as siglas dos nós
         print("CLOSED:", list(closed_set))
 
         if atual == objetivo:
@@ -310,3 +310,4 @@ if __name__ == "__main__":
 
     except ValueError as e:
         print("❌ Erro:", e)
+        
