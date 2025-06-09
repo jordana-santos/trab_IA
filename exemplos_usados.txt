@@ -5,7 +5,16 @@ RS
 0.4
 
 # EXEMPLO MUDANÇA DE PESOS E IMPACTO NO RESULTADO (ADMISSÍVEL)
+AL
+0.4
+0.4
+0.2
 
+
+AL
+0.1
+0.2
+0.7
 
 # TESTE DE COMPARAÇÃO (COM OS DADOS ADMISSÍVEIS E NÃO ADMISSÍVEIS)
 # testar com admissivel.py e nao_admissivel.py
